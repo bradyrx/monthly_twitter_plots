@@ -48,7 +48,7 @@ def main():
     ds['time'] = pd.date_range('1891-01', '2018-0' + str(latest_month + 1),
 			       freq='M')
     # Create anomalies
-    clim = ds.sel(time=slice('1891-01', '1920-12')).groupby('time.month') \
+    clim = ds.sel(time=slice('1951-01', '1980-12')).groupby('time.month') \
         .mean('time')
     anom = ds.groupby('time.month') - clim
     data = anom.sel(time='2018-0' + str(latest_month)).squeeze()
@@ -56,7 +56,7 @@ def main():
 					        coord=data.lon.values)
     # Plot
     f, ax = et.vis.make_cartopy(grid_lines=False, frameon=True)
-    p = ax.contourf(cyclic_lons, ds.lat, cyclic_data, np.arange(-5, 5.5, 0.5), 
+    p = ax.contourf(cyclic_lons, ds.lat, cyclic_data, np.arange(-4, 4.5, 0.5), 
                     transform=ccrs.PlateCarree(), cmap=cm.balance)
 
     plt.colorbar(p, orientation='horizontal',pad=0.05,fraction=0.05,
@@ -67,7 +67,7 @@ def main():
              horizontalalignment='center',
              verticalalignment='center',
              transform=ax.transAxes, fontsize=24)
-    plt.text(0.5, 1.03, '(Deviation from 1890-1920 Mean)',
+    plt.text(0.5, 1.03, '(Deviation from 1951-1980 Mean)',
              horizontalalignment='center',
              verticalalignment='center',
              transform=ax.transAxes, fontsize=16)
